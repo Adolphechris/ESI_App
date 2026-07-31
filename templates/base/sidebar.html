@@ -14,7 +14,7 @@
                 {% if user.photo %}
                 <img src="{{ user.photo.url }}" alt="..." class="img-circle profile_img">
                 {% else %}
-                <img src="{% static 'images/user.png' %}" alt="..." class="img-circle profile_img">
+                <img src="{% static 'img/user.png' %}" alt="..." class="img-circle profile_img">
                 {% endif %}
             </div>
             <div class="profile_info">
@@ -36,11 +36,6 @@
 
                     <!-- Tableau de bord : tous les rôles -->
                     <li id="index"><a href="{% url 'index' %}"><i class="fa fa-home"></i> Tableau de bord </a></li>
-
-                    <!-- Factures : Admin, Facturier, Gérant Magasin -->
-                    {% if user|has_role:"admin,facturier,gerant_magasin" %}
-                    <li id="factures"><a href="{% url 'factures' %}"><i class="fa fa-shopping-cart"></i> Factures </a></li>
-                    {% endif %}
 
                     <!-- Caisses : Admin, Caissier, Gérant Magasin -->
                     {% if user|has_role:"admin,caissier,gerant_magasin" %}

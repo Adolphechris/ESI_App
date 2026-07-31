@@ -6,42 +6,65 @@
 {{block.super}}
 <style>
     .cardbox{
-        padding: 5px 5px 5px 5px;
+        padding: 10px;
     }
     .cardcontainer{
-        background-color: rgb(202 138 4);
+        border-radius: 12px;
         padding: 2px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+    .cardcontainer:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    
+    /* Couleurs spécifiques par type de caisse */
+    .bg-principal { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); }
+    .bg-caisse-1 { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
+    .bg-caisse-2 { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
+    .bg-caisse-3 { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
+    .bg-default  { background: linear-gradient(135deg, #7f8c8d 0%, #2c3e50 100%); }
+
     .cardhead{
         display: flex;
         justify-content: space-between;
         margin: auto;
-        padding: 10px 10px 15px 20px;
+        padding: 20px 15px 15px 20px;
     }
     .cardfoot{
          display: flex;
          padding: 10px 10px 15px 20px;
+         border-top: 1px solid rgba(255,255,255,0.2);
     }
     .cardniveau{
-        font-size: 12px;
-        color: rgb(249 250 251);
+        font-size: 11px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
     }
     .cardclasse{
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 800;
         color: white;
+        margin-top: 5px;
     }
     .cardicon{
         position: relative;
-        top: 15px; left: -30px;
     }
     .iconelem{
-        display: inline-block;
-        background: white;
-        border-radius: 50%;
-        box-shadow: 0 0 2px #888;
-        padding: 0.5em 0.6em;
-        font-size: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(5px);
+        border-radius: 12px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .cardfootelem{
         padding-right: 15px;
@@ -51,8 +74,9 @@
         color: white;
     }
     .cardfootelem span{
-        font-size: 14px;
+        font-size: 13px;
         color: white;
+        font-weight: 600;
     }
 </style>
 {% endblock stylesheets %}
@@ -76,7 +100,12 @@
                             {% for caisse in liste_caisses %}
                                 <a href="{% url 'historique_caisse' caisse.pk %}">
                                     <div class="col-md-3 col-xs-12 cardbox">
-                                        <div class="cardcontainer">
+                                        <div class="cardcontainer 
+                                            {% if caisse.is_principal %}bg-principal
+                                            {% elif '1' in caisse.nom %}bg-caisse-1
+                                            {% elif '2' in caisse.nom %}bg-caisse-2
+                                            {% elif '3' in caisse.nom %}bg-caisse-3
+                                            {% else %}bg-default{% endif %}">
                                             <div class="cardhead">
                                                 <div>
                                                     <h5 class="cardniveau">CAISSE</h5>
